@@ -1,0 +1,23 @@
+# 필수 라이브러리 설치
+!pip install moviepy
+
+from moviepy.editor import *
+
+# 이미지 로드
+image_path = "/content/803929195609826235.png"  # 업로드된 이미지 경로
+output_path = "/content/output.mp4"  # 출력 영상 경로
+
+# 이미지 클립 생성
+image_clip = ImageClip(image_path, duration=5)  # 5초 동안 고정
+
+# 간단한 줌 효과 추가
+zoom_effect = image_clip.fx(vfx.resize, newsize=(image_clip.size[0] * 1.2, image_clip.size[1] * 1.2)) \
+                         .set_duration(5)
+
+# 페이드 인/아웃 효과 추가
+fade_in_out = zoom_effect.crossfadein(1).crossfadeout(1)
+
+# 영상 저장
+fade_in_out.write_videofile(output_path, fps=24)
+
+print("영상 생성 완료. output.mp4 파일을 다운로드하세요.")
